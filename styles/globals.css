@@ -1,16 +1,64 @@
-html,
-body {
-    padding: 0;
-    margin: 0;
-    font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
-    Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
+/* HEADER SECTION */
+.from-btn, .from-btn > button {
+    font-weight: bold;
 }
 
-a {
-    color: inherit;
-    text-decoration: none;
+.from-btn {
+    color: #0F1D40;
 }
 
-* {
-    box-sizing: border-box;
+.from-btn > button:disabled {
+    color: #000000;
+    border: 1px solid #c0c1c7;
+}
+
+
+/* FORM SECTION */
+.submit-btn:hover {
+    color: #FFFFFF;
+}
+
+.submit-btn {
+    background-image: linear-gradient(to right, #8D49F7, #6B53FF);
+    color: #FFFFFF;
+}
+
+.submit-btn-disabled {
+    background-color: #EEEFF2;
+    color: #9fa3af;
+}
+
+.error-text {
+    color: #8c1717;
+}
+
+
+/* ESTIMATE SECTION */
+.price-estimate, .item-desc {
+    color: #525C76;
+}
+
+.price-estimate-col {
+    background-color: #F5F6F7;
+}
+
+.estimate-box {
+    background-color: #FFFFFF;
+}
+
+.estimate-disclaimer {
+    background-color: #F1FFFB;
+    font-size: 0.9rem;
+}
+
+.estimate-box, .estimate-disclaimer {
+    border-radius: 1rem;
+}
+
+.estimate-box hr {
+    border: 1px solid #E7E8EA;
+}
+
+.estimate-desc {
+    color: #525C76;
 }
