@@ -51,7 +51,7 @@
     font-size: 0.9rem;
 }
 
-.estimate-box, .estimate-disclaimer {
+.estimate-box, .estimate-disclaimer, .request-detail-list {
     border-radius: 1rem;
 }
 

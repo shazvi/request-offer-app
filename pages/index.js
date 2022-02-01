@@ -3,14 +3,30 @@ import InputField from "../components/InputField";
 import { useForm } from "react-hook-form";
 import TextArea from "../components/TextArea";
 import EstimateSection from "../components/EstimateSection";
+import {useRouter} from "next/router";
+import {useState} from "react";
 
 export default function Home() {
     const { register, handleSubmit, formState: { errors } } = useForm();
+    const router = useRouter();
+    const [error, setError] = useState("");
+    const [loading, setLoading] = useState(false);
     
     const sendOfferRequest = async data => {
-        console.log(data);
-        alert("submitted");
-        // todo
+        setLoading(true);
+        setError("");
+        let response = await fetch("/api/requests", {
+            method: "POST",
+            body: JSON.stringify(data),
+        });
+        let responseJSON = await response.json();
+        
+        if (responseJSON.success) {
+            await router.push(`request/${responseJSON.id}`);
+        } else {
+            setLoading(false);
+            setError("Failed to send offer request");
+        }
     };
     
     return (
@@ -40,7 +56,7 @@ export default function Home() {
 
                             <div className="row">
                                 <InputField className="col" label="City" name="city" required={true} placeholder="New York" register={register} errors={errors} />
-                                <InputField className="col" label="State/Province" name="state" required={true} placeholder="johndoe@company.com" register={register} errors={errors} />
+                                <InputField className="col" label="State/Province" name="state" required={true} placeholder="Washington" register={register} errors={errors} />
                             </div>
 
                             <div className="row">
@@ -67,8 +83,13 @@ export default function Home() {
 
                             <TextArea label="Additional info (optional)" name="additionalInfo" placeholder="Any other infos or comments?" register={register} errors={errors} />
 
+                            {error && <div className="alert alert-danger" role="alert">{error}</div>}
+
                             {Object.keys(errors).length === 0 ?
-                                <button className="btn w-100 mt-5 submit-btn" type="submit">Send Offer Request</button> :
+                                <button disabled={loading} className="btn w-100 mt-5 submit-btn" type="submit">
+                                    {loading && <div className="spinner-border spinner-border-sm me-2" role="status"/>}
+                                    Send Offer Request
+                                </button> :
                                 <button className="btn w-100 mt-5 submit-btn-disabled" type="submit">Send Offer Request</button>
                             }
                         </form>
