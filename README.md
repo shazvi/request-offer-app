@@ -39,3 +39,7 @@ I'd be happy to discuss these implementations during a walkthrough
 - Check browser compatibility with all popular browsers
 - "Select Timeline" dropdown styling
 - "Creative briefing" tooltip styling
+
+### Challenges faced
+
+- I haven't worked with Static generation in the past, and it took a while to get right with dynamic routes.

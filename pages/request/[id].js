@@ -1,31 +1,8 @@
-import { useRouter } from 'next/router'
-import {useEffect, useRef, useState} from "react";
 import Head from 'next/head'
+import {GetAllRequestIds, GetRequestById} from "../../libs/requests";
 
-export default function Id() {
-    const router = useRouter();
-    const id = router.query.id;
-    const [error, setError] = useState("");
-    const [data, setData] = useState({});
-    
-    // Fetch data when page loads
-    useEffect(() => {
-        if(id) {
-            fetchRequest();
-        }
-    },[id]);
-    
-    async function fetchRequest() {
-        let response = await fetch(`/api/request/${id}`);
-        let responseJSON = await response.json();
-        
-        if(responseJSON.success) {
-            setData(responseJSON.data);
-        } else {
-            setError("Failed to fetch request details");
-        }
-    }
-    
+// Data is passed from `getStaticProps` function
+export default function Id({ data }) {
     // Map timeline integer values to their corresponding texts
     const timelineValues = {
         1: "⚠️ Going live as soon as possible",
@@ -40,10 +17,6 @@ export default function Id() {
                 <meta name="viewport" content="width=device-width, initial-scale=1" />
                 <link rel="icon" href="/favicon.ico" />
             </Head>
-
-            {error && <div className="alert alert-danger" role="alert">
-                {error}
-            </div>}
         
             <h1 className="py-5 fw-bold">Request Details</h1>
             
@@ -63,4 +36,26 @@ export default function Id() {
             </div>
         </div>
     );
+}
+
+// This function gets called on the server side at build time
+export async function getStaticPaths() {
+    // Get all request ids to pre-render at build time
+    let Ids = await GetAllRequestIds();
+    const paths = Ids.map(Id => ({
+        params: {id: Id.toString()}
+    }));
+
+    // { fallback: false } means other routes should 404
+    return { paths, fallback: false }
+}
+
+// This function gets called on the server side at build time
+export async function getStaticProps({params}) {
+    // params contains `id` from above function
+    let request = await GetRequestById(params.id);
+    request._id = request._id.toString();
+    
+    // Pass data to the page via props
+    return { props : { data: request }}
 }
