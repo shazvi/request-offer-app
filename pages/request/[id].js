@@ -46,8 +46,7 @@ export async function getStaticPaths() {
         params: {id: Id.toString()}
     }));
 
-    // { fallback: false } means other routes should 404
-    return { paths, fallback: false }
+    return { paths, fallback: "blocking" }
 }
 
 // This function gets called on the server side at build time
