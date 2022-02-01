@@ -12,10 +12,11 @@ export default function Home() {
     const [error, setError] = useState("");
     const [loading, setLoading] = useState(false);
     
+    // Submit form
     const sendOfferRequest = async data => {
         setLoading(true);
         setError("");
-        let response = await fetch("/api/requests", {
+        let response = await fetch("/api/request", {
             method: "POST",
             body: JSON.stringify(data),
         });
@@ -65,7 +66,7 @@ export default function Home() {
                             </div>
 
                             <div className="form-group py-3">
-                                <label htmlFor="timeline">Timeline</label>
+                                <label htmlFor="timeline" className="fw-bold">Timeline</label>
                                 <select className="form-control" id="timeline" defaultValue={0} {...register("timeline", { validate: val => val > 0 } )}>
                                     <option hidden disabled value={0}>Select timeline</option>
                                     <option value="1">⚠️ Going live as soon as possible</option>
@@ -77,7 +78,7 @@ export default function Home() {
 
                             {/* Copied the TextArea component for now because this has additional tooltip interaction */}
                             <div className="form-group py-3">
-                                <label htmlFor="creativeBriefing">Creative briefing (optional) <span title="Keep it short! Briefings that are longer than 1 page usually just don't get read.">💡</span></label>
+                                <label htmlFor="creativeBriefing" className="fw-bold">Creative briefing (optional) <span title="Keep it short! Briefings that are longer than 1 page usually just don't get read.">💡</span></label>
                                 <textarea className="form-control" id="creativeBriefing" placeholder="Attach/upload your briefing or write it here" {...register("creativeBriefing")} />
                             </div>
 
